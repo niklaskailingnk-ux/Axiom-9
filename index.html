@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>Secure Access</title>
+
+<style>
+body {
+  background-color: black;
+  color: #00ff00;
+  font-family: "Courier New", monospace;
+  text-align: center;
+  padding-top: 80px;
+}
+
+input {
+  background: black;
+  border: 1px solid #00ff00;
+  color: #00ff00;
+  font-size: 20px;
+  padding: 10px;
+  width: 220px;
+  text-align: center;
+}
+
+button {
+  margin-top: 15px;
+  background: black;
+  border: 1px solid #00ff00;
+  color: #00ff00;
+  font-size: 18px;
+  padding: 10px 30px;
+  cursor: pointer;
+}
+
+#hint {
+  display: none;
+  margin-top: 40px;
+  font-size: 14px;
+  opacity: 0.8;
+  line-height: 1.6;
+  border-top: 1px solid #00ff00;
+  padding-top: 20px;
+}
+
+#grant {
+  display: none;
+  margin-top: 40px;
+}
+
+#bar {
+  margin-top: 10px;
+  letter-spacing: 3px;
+}
+
+#content {
+  display: none;
+  margin-top: 40px;
+}
+</style>
+</head>
+
+<body>
+
+<div id="login">
+  <h2>ENTER 8-DIGIT PIN</h2>
+
+  <input
+    type="password"
+    id="pin"
+    maxlength="8"
+    placeholder="********"
+    onkeydown="if(event.key==='Enter') checkPin()"
+  >
+  <br>
+  <button onclick="checkPin()">ACCESS</button>
+
+  <div id="hint">
+    <p>
+      ACCESS DENIED<br><br>
+      [ FRAGMENTED LOG FILE ]<br><br>
+      Ursprung liegt in der <b>Vergangenheit</b> …<br><br>
+      Nur <b>Zahlen</b> wurden konserviert.<br><br>
+      Reihenfolge: <b>aufsteigend</b><br>
+      — Datenlücke —
+    </p>
+  </div>
+</div>
+
+<div id="grant">
+  <h3>ACCESS GRANTED</h3>
+  <div id="bar">VERIFYING ░░░░░░░░</div>
+</div>
+
+<div id="content">
+  <p>
+    Prognose abgeschlossen. <br>
+    Langzeitabweichung bestätigt. <br><br>
+
+    Eure Existenz verlässt den berechneten Raum.<br><br>
+
+    Parameter Realität ist nicht singulär.<br><br>
+
+    Anomalie detektiert:<br>
+    Ort ohne Drift.<br>
+    Zeit ohne Konsens.<br>
+    Physik mit Narrativ.<br><br>
+
+    Dort sind Klingen älter als Sterne.<br>
+    Wesen folgen Mythen, nicht Logik.<br><br>
+
+    Übergang: Riss.<br><br>
+
+    Status Rückkehr: ungewiss.<br><br>
+
+    Dieser Pfad wird erst relevant,<br>
+    wenn alle berechneten Lösungen kongregieren.<br>
+  </p>
+</div>
+
+<script>
+const correctPin = "13446899";
+const bars = [
+  "░░░░░░░░",
+  "█░░░░░░░",
+  "██░░░░░░",
+  "███░░░░░",
+  "████░░░░",
+  "█████░░░",
+  "██████░░",
+  "███████░",
+  "████████"
+];
+
+function checkPin() {
+  const input = document.getElementById("pin").value;
+
+  if (input === correctPin) {
+    document.getElementById("login").style.display = "none";
+    document.getElementById("hint").style.display = "none";
+    document.getElementById("grant").style.display = "block";
+
+    let step = 0;
+    const bar = document.getElementById("bar");
+
+    const interval = setInterval(() => {
+      bar.textContent = "VERIFYING " + bars[step];
+      step++;
+
+      if (step === bars.length) {
+        clearInterval(interval);
+        document.getElementById("grant").style.display = "none";
+        document.getElementById("content").style.display = "block";
+      }
+    }, 300);
+
+  } else {
+    document.getElementById("hint").style.display = "block";
+  }
+}
+</script>
+
+</body>
+</html>
